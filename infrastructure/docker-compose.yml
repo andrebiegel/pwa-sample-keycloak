@@ -1,0 +1,49 @@
+  version: '3.7'
+    
+  services:
+    postgres:
+      image: postgres:9.6.14
+      environment:
+        - POSTGRES_DB=keycloak
+        - POSTGRES_USER=keycloak
+        - POSTGRES_PASSWORD=password 
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U keycloak"]
+        interval: 10s
+        timeout: 5s
+        retries: 5  
+    keycloak:
+      build: 
+        context: ./docker/keycloak
+      environment:
+        #- KEYCLOAK_HOSTNAME=keycloak.localhost
+        - KEYCLOAK_USER=admin
+        - KEYCLOAK_PASSWORD=password
+        - DB_VENDOR=postgres
+        - DB_ADDR=postgres
+        - DB_DATABASE=keycloak # same as default 
+        - DB_USER=keycloak
+        - DB_PASSWORD=password
+        - DB_SCHEMA=public # same as default 
+        - KEYCLOAK_IMPORT=/tmp/realm-export.json
+      ports:
+      - 8080:8080 
+      healthcheck:
+        test: curl -f http://localhost:8080/auth/realms/content-realm || exit 1
+        interval: 30s
+        timeout: 10s
+        retries: 10
+        start_period: 1m
+      depends_on:
+        - postgres
+    
+    content:
+      build: ./../content
+      ports:
+        - "8081:8080"
+    app:
+      build: ./docker/app
+      ports:
+        - "80:80"
+      volumes: 
+      - ./docker/app/static:/usr/share/nginx/html

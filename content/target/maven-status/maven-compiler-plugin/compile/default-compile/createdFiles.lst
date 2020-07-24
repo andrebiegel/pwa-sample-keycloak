@@ -1,0 +1,3 @@
+airhacks\service\JAXRSConfiguration.class
+airhacks\service\system\boundary\SystemResource.class
+airhacks\service\ping\boundary\PingResource.class

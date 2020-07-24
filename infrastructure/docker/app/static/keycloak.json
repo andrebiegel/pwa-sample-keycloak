@@ -1,0 +1,8 @@
+{
+  "realm": "content-realm",
+  "auth-server-url": "http://localhost:8080/",
+  "ssl-required": "external",
+  "resource": "content",
+  "public-client": true,
+  "confidential-port": 0
+}

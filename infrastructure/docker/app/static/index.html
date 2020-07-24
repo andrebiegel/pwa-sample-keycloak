@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>A Blog</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <header slot="header">
+      <h1>System Information</h1>
+    </header>
+
+    <system-env url="http://localhost:8081/content/resources/system"></system-env>
+    <footer slot="footer">
+      <jwt-token></jwt-token>
+    </footer>
+  <script  src="./js/system.js" type="module" ></script> 
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
